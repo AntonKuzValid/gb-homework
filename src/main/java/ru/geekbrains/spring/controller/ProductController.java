@@ -18,7 +18,7 @@ public class ProductController {
     private Repository<Product> productRepository;
 
     @PostMapping
-    public String addProduct(@RequestBody @Valid Product p) {
+    public String addProduct(@RequestBody Product p) {
         productRepository.add(p);
         return "Success";
     }
