@@ -30,7 +30,6 @@ public class CustomDeserializer extends JsonDeserializer<Product> {
         if (node != null && !node.isEmpty()) {
             Product p = new Product();
             try {
-                p.setId(node.get("id").asInt());
                 p.setTitle(node.get("Product code").asText().split(" - ")[0]);
                 p.setCost(node.get("cost").asInt());
                 p.setCompany(node.get("Product code").asText().split(" - ")[1]);

@@ -1,23 +1,55 @@
 package ru.geekbrains.spring.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.geekbrains.spring.annotation.Company;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 
-@Data
+@Getter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "product", schema = "public")
+@NamedQueries({
+        @NamedQuery(name = "getAll", query = "from Product"),
+        @NamedQuery(name = "getById", query = "from Product where id = :id")
+}
+)
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
-    @Column (name = "title")
+    @Column(name = "title")
     private String title;
+    @Column(name = "cost")
     private Integer cost;
+    @Column(name = "company")
     private String company;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return id.equals(product.id) && title.equals(product.title) && cost.equals(product.cost) && company.equals(product.company);
+    }
+
+    @Override
+    public int hashCode() {
+        return 2042274511;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
 }
