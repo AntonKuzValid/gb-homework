@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css}"/>
+</head>
+
+<body>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/person.js}"></script>
+<div class="container">
+    <h1>Добавить продукт</h1>
+    <form action="#" th:action="@{/product}" method="post" th:object="${product}">
+        <div class="mb-3">
+            <label class="form-label">Название</label>
+            <input type="text" class="form-control" id="title" name="title"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Компания</label>
+            <input type="text" class="form-control" id="company" name="company"/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Цена</label>
+            <input type="text" class="form-control" id="cost" name="cost"/>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn-primary">Добавить</button>
+        </div>
+    </form>
+
+    <div>
+        <h1>Список продуктов</h1>
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Компания</th>
+                <th>Цена</th>
+            </tr>
+            <tr th:each="product : ${product}">
+                <td th:text="${product.id}">...</td>
+                <td th:text="${product.title}">...</td>
+                <td th:text="${product.company}">...</td>
+                <td th:text="${product.cost}">...</td>
+                <td>
+                    <a class="btn btn-danger" th:href="@{'/product/' + ${product.id}}">Удалить</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</div>
+</body>
+</html>
