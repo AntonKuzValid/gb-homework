@@ -3,6 +3,7 @@ package ru.geekbrains.spring.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @ToString
@@ -13,10 +14,8 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "getAll", query = "from Product"),
         @NamedQuery(name = "getById", query = "from Product where id = :id")
-}
-)
-
-public class Product {
+})
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,6 +26,12 @@ public class Product {
     private Integer cost;
     @Column(name = "company")
     private String company;
+    @Version
+    @Column(name = "optlock",
+            columnDefinition = "integer DEFAULT 0",
+            nullable = false,
+            length = 10)
+    private Integer optlock;
 
     @Override
     public boolean equals(Object o) {
