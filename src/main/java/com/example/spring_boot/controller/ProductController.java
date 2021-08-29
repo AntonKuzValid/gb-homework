@@ -5,6 +5,7 @@ import com.example.spring_boot.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,7 +24,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public String create(@Valid @ModelAttribute Product product){
+    public String create(@ModelAttribute("product") @Valid Product product, BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("Errors - " + bindingResult.getAllErrors());
+            return "redirect:/product";
+        }
+
         productService.save(product);
         return "redirect:/product";
     }
