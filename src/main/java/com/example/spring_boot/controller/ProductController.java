@@ -30,7 +30,6 @@ public class ProductController {
             System.out.println("Errors - " + bindingResult.getAllErrors());
             return "redirect:/product";
         }
-
         productService.save(product);
         return "redirect:/product";
     }
