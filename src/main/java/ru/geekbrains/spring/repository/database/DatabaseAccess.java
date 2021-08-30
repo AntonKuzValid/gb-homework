@@ -61,11 +61,7 @@ public class DatabaseAccess {
         Product inRepository;
         if ((inRepository = getById(id)) != null) {
             entityManager.lock(inRepository, LockModeType.OPTIMISTIC);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+
             inRepository.setCompany(p.getCompany());
             inRepository.setTitle(p.getTitle());
             inRepository.setCost(p.getCost());
