@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.webstore.entity.Ordering;
 
 import java.util.List;
 
@@ -22,7 +23,6 @@ import java.util.List;
 
 @Service
 @Log4j2
-
 public class SessionFactoryService {
 
     private SessionFactory factory;
@@ -54,12 +54,11 @@ public class SessionFactoryService {
             s.beginTransaction();
             s.save(t);
             log.info("Save " + t);
+            s.getTransaction().commit();
             return true;
         } catch (Exception e) {
             log.info(e.getMessage() + e.getCause());
             return false;
-        } finally {
-            s.getTransaction().commit();
         }
     }
 
@@ -71,8 +70,6 @@ public class SessionFactoryService {
         } catch (Exception e) {
             log.info(e.getMessage() + e.getCause());
             return null;
-        } finally {
-            s.getTransaction().commit();
         }
     }
 
@@ -97,12 +94,11 @@ public class SessionFactoryService {
             s = getSession();
             s.beginTransaction();
             s.update(t);
+            s.getTransaction().commit();
             return true;
         } catch (Exception e) {
             log.info(e.getMessage() + e.getCause());
             return false;
-        } finally {
-            s.getTransaction().commit();
         }
     }
 
@@ -114,12 +110,11 @@ public class SessionFactoryService {
                     .createNamedQuery(q, tClass)
                     .setParameter("id", id).getSingleResult();
             s.delete(t);
+            s.getTransaction().commit();
             return true;
         } catch (Exception e) {
             log.info(e.getMessage() + e.getCause());
             return false;
-        } finally {
-            s.getTransaction().commit();
         }
     }
 }

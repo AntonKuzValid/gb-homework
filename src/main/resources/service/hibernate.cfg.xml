@@ -15,5 +15,6 @@
         <property name="hibernate.archive.autodetect"> value="class, hbm"</property>
         <mapping class="ru.geekbrains.webstore.entity.Product"/>
         <mapping class="ru.geekbrains.webstore.entity.Customer"/>
+        <mapping class="ru.geekbrains.webstore.entity.Ordering"/>
     </session-factory>
 </hibernate-configuration>

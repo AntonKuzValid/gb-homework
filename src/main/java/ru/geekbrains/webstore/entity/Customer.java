@@ -13,6 +13,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @org.hibernate.annotations.NamedQuery(name = "findC", query = "from Customer where id = :id")
+@org.hibernate.annotations.NamedQuery(name = "findByName", query = "from Customer  where name = :name")
 @org.hibernate.annotations.NamedQuery(name = "findAllC", query = "from Customer")
 public class Customer {
 

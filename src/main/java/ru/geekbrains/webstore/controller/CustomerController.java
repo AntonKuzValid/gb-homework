@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.webstore.dao.CustomerDao;
+import ru.geekbrains.webstore.entity.Ordering;
 import ru.geekbrains.webstore.entity.Customer;
 
 import java.util.List;
@@ -45,4 +46,13 @@ public class CustomerController {
         return customerDao.deleteCustomer(Integer.parseInt(id));
     }
 
+    @PostMapping(value = "/order")
+    public boolean addOrder(@RequestBody Ordering o) {
+        return customerDao.addOrder(o);
+    }
+
+    @GetMapping(value = "/order")
+    public List<Ordering> find(@RequestBody String name) {
+        return customerDao.getOrders(name);
+    }
 }

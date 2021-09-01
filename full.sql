@@ -26,7 +26,7 @@ VALUES ('Max'),
        ('Chad'),
        ('Brian');
 
-DROP TABLE IF EXISTS "order" CASCADE;
+DROP TABLE IF EXISTS "ordering" CASCADE;
 CREATE TABLE orders
 (
     id    bigserial PRIMARY KEY,

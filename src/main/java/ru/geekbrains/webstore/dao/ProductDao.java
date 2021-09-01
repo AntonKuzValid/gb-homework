@@ -16,8 +16,6 @@ public class ProductDao {
     @Autowired
     private SessionFactoryService service;
 
-    private Session s;
-
     public Product getProduct(Integer id) {
         return service.get(id, "findP", Product.class);
     }
@@ -29,7 +27,6 @@ public class ProductDao {
     public boolean addProduct(Product p) {
         return service.add(p);
     }
-
 
     public boolean deleteProduct(Integer id) {
         return service.delete(id, "findP", Product.class);
