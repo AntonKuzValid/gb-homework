@@ -17,8 +17,8 @@ public class Products {
     @Column(name = "trade_company")
     private String trade_company;
 
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "my_price")
+    private Integer my_price;
 
     public Products(){}
 
@@ -26,7 +26,7 @@ public class Products {
         this.id = id;
         this.title = title;
         this.trade_company = trade_company;
-        this.price = price;
+        this.my_price = price;
     }
 
     public Integer getId() {
@@ -54,15 +54,15 @@ public class Products {
     }
 
     public Integer getCost() {
-        return price;
+        return my_price;
     }
 
-    public void setCost(Integer price) {
-        this.price = price;
+    public void setCost(Integer my_price) {
+        this.my_price = my_price;
     }
 
-//    @Override
-//    public String toString() {
-//        return String.format("Products [id = %d, title = %s, trade_company = %s, price = %d]", id, title, trade_company, price);
-//    }
+    @Override
+    public String toString() {
+        return String.format("Products [id = %d, title = %s, trade_company = %s, price = %d]", id, title, trade_company, my_price);
+    }
 }

@@ -3,7 +3,9 @@ package com.example.spring_boot.controller;
 import com.example.spring_boot.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -14,10 +16,15 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public String findById(){
-        System.out.println("Контроллер");
-        productService.show();
+    public String selectAll(Model model){
+        model.addAttribute("product", productService.selectAll());
         return "product";
+    }
+
+    @GetMapping("/{id}")
+    public String deleteById(@PathVariable Integer id){
+        productService.removeFromDB(id);
+        return "redirect:/product";
     }
 
 //    @PostMapping
@@ -31,9 +38,4 @@ public class ProductController {
 //        return "redirect:/product";
 //    }
 //
-//    @GetMapping("/{id}")
-//    public String deleteById(@PathVariable Integer id){
-////        productService.deleteById(id);
-//        return "redirect:/product";
-//    }
 }
