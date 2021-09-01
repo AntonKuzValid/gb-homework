@@ -1,48 +1,47 @@
 package com.example.spring_boot.repository;
 
-import com.example.spring_boot.model.Product;
+import com.example.spring_boot.model.Products;
+import com.example.spring_boot.service.PrepareDataApp;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepository {
-    private final List<Product> productDB  = new CopyOnWriteArrayList<>();
-    private final AtomicInteger counter = new AtomicInteger();
+    private static SessionFactory factory;
 
-    public ProductRepository(){
-        Product product1 = new Product();
-        product1.setTitle("Avocado");
-        product1.setCompany("Fruits and Co");
-        product1.setCost(7);
-        save(product1);
-
-        Product product2 = new Product();
-        product2.setTitle("Orange");
-        product2.setCompany("Turkey Fruits Company");
-        product2.setCost(4);
-        save(product2);
-
-        Product product3 = new Product();
-        product3.setTitle("Kiwi");
-        product3.setCompany("Thai plants");
-        product3.setCost(5);
-        save(product3);
+    public ProductRepository() {
+        PrepareDataApp.forcePrepareData();
     }
 
-    public List<Product> findAll(){
-        return productDB.stream().collect(Collectors.toUnmodifiableList());
+    private void prepareFactory() {
+        factory = new Configuration()
+                .configure("configs/hibernate.cfg.xml")
+                .buildSessionFactory();
     }
 
-    public void save(Product product) {
-        product.setId(counter.incrementAndGet());
-        productDB.add(product);
+    public void show() {
+        prepareFactory();
+        System.out.println("ProductRepository");
+        try (Session session = factory.getCurrentSession()) {
+            try {
+                System.out.println("!  try  !");
+                session.beginTransaction();
+                final Products product = new Products(null, "Mandarin", "Fruits", 7);
+                session.save(product);
+                session.getTransaction().commit();
+            } catch (Exception exception){
+                System.out.println("!  catch  ! - " + exception);
+                session.getTransaction().rollback();
+            }
+        } finally {
+            System.out.println("!  finally  !");
+            shutdown();
+        }
     }
 
-    public void deleteById(Integer id) {
-        productDB.removeIf(it -> it.getId().equals(id));
+    public static void shutdown() {
+        factory.close();
     }
 }
