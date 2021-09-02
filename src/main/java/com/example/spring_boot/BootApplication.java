@@ -8,14 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BootApplication {
-    private static SessionFactory factory;
 
     public static void main(String[] args) {
         SpringApplication.run(BootApplication.class, args);
-
         PrepareDataApp.forcePrepareData();
-        factory = new Configuration()
-                .configure("configs/hibernate.cfg.xml")
-                .buildSessionFactory();
     }
 }

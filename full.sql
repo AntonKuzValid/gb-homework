@@ -1,8 +1,8 @@
 BEGIN;
 
-DROP TABLE IF EXISTS products CASCADE;
-CREATE TABLE products (id bigserial PRIMARY KEY, title VARCHAR(255), trade_company VARCHAR(255), my_price int);
-INSERT INTO products (title, trade_company, my_price) VALUES
+DROP TABLE IF EXISTS product CASCADE;
+CREATE TABLE product (id bigserial PRIMARY KEY, title VARCHAR(255), company VARCHAR(255), cost INTEGER);
+INSERT INTO product (title, company, cost) VALUES
                                             ('Avocado', 'Fruits and Co', 10),
                                             ('Banana', 'Turkey Fruits Company', 4),
                                             ('Kiwi', 'Thai plants', 7),

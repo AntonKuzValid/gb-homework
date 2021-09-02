@@ -1,26 +1,21 @@
 package com.example.spring_boot.repository;
 
-import com.example.spring_boot.model.Products;
+import com.example.spring_boot.model.Product;
 import com.example.spring_boot.service.PrepareDataApp;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
+@RequiredArgsConstructor
 public class ProductRepository {
     private static SessionFactory factory;
-
-    public ProductRepository() {
-        PrepareDataApp.forcePrepareData();
-    }
 
     private void prepareFactory() {
         factory = new Configuration()
@@ -28,47 +23,37 @@ public class ProductRepository {
                 .buildSessionFactory();
     }
 
-    public List<Products> selectAll() {
+    public List<Product> selectAll() {
         prepareFactory();
-        List<Products> items = new CopyOnWriteArrayList<>();
+        List<Product> items = new CopyOnWriteArrayList<>();
         try (Session session = factory.getCurrentSession()) {
             try {
                 session.beginTransaction();
-                items = session.createQuery("from Products").getResultList();
-                System.out.println(items + "\n");
-
+                items = session.createQuery("from Product").getResultList();
                 session.getTransaction().commit();
             } catch (Exception exception){
                 session.getTransaction().rollback();
             }
         } finally {
-            shutdown();
+            factory.close();
         }
         return items;
     }
 
-    public static void shutdown() {
-        factory.close();
-    }
-
-    public void removeFromDB(Integer id) {
-        System.out.println("remove - " + id);
+    public void removeFromDB(Long id) {
         prepareFactory();
         try (Session session = factory.getCurrentSession()) {
             try {
-                System.out.println("!  try  !");
                 session.beginTransaction();
-                Products products = session.get(Products.class, id);
-                System.out.println(products.toString());
-                session.delete(products);
+                Product product = selectAll().get(id.intValue());
+                session.delete(new Product(null, product.getTitle(), product.getCompany(), product.getCost()));
                 session.getTransaction().commit();
             } catch (Exception exception){
-                System.out.println("!  catch  ! - " + exception);
+                System.out.println("\n\n ! RemoveFromDB  catch  ! - " + exception + "\n\n");
                 session.getTransaction().rollback();
             }
         } finally {
-            System.out.println("!  finally  !");
-            shutdown();
+            factory.close();
         }
     }
 }

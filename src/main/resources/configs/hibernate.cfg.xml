@@ -15,6 +15,6 @@
         <property name="hibernate.cache.use_second_level_cache">true</property>
         <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.internal.EhcacheRegionFactory</property>
 
-        <mapping class="com.example.spring_boot.model.Products"/>
+        <mapping class="com.example.spring_boot.model.Product"/>
     </session-factory>
 </hibernate-configuration>
