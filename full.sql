@@ -1,38 +1,32 @@
 BEGIN;
 
 DROP TABLE IF EXISTS product CASCADE;
+
 CREATE TABLE product
 (
-    id    bigserial PRIMARY KEY,
-    title VARCHAR(255),
-    cost  varchar(255),
+    id      bigserial PRIMARY KEY,
+    title   VARCHAR(255),
+    cost    decimal,
     optlock integer
 );
-INSERT INTO product (title, cost, optlock)
 
-VALUES ('IPhone', '100', 0),
-       ('Macbook', '200', 0),
-       ('Xiaomi Notepad 12', '300', 0);
+do language plpgsql
+$$
+    declare
+        i    int default 20;
+        cost decimal;
+        s    varchar default 'test_item';
+    begin
+        INSERT INTO product (title, cost, optlock)
+        VALUES ('IPhone', 100, 0),
+               ('Macbook', 200, 0),
+               ('Xiaomi Notepad 12', 300, 0);
+        while i > 0
+            loop
+                cost = round((random() * 100)::numeric, 2);
+                insert into product(title, cost, optlock) values (s, cost, 0);
 
-DROP TABLE IF EXISTS customer CASCADE;
-CREATE TABLE customer
-(
-    id    bigserial PRIMARY KEY,
-    name VARCHAR(255)
-);
-INSERT INTO customer (name)
-
-VALUES ('Max'),
-       ('Chad'),
-       ('Brian');
-
-DROP TABLE IF EXISTS "ordering" CASCADE;
-CREATE TABLE orders
-(
-    id    bigserial PRIMARY KEY,
-    customer_id bigint,
-    order_details json,
-    optlock integer
-);
-end;
-COMMIT;
+                i = i - 1;
+            end loop;
+    end
+$$

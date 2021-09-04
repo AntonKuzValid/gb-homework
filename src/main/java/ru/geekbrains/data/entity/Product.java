@@ -1,30 +1,31 @@
-package ru.geekbrains.webstore.entity;
+package ru.geekbrains.data.entity;
+
 
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
+@RequiredArgsConstructor
 @Getter
 @Setter
-@RequiredArgsConstructor
-@AllArgsConstructor
-@org.hibernate.annotations.NamedQuery(name = "findP", query = "from Product where id = :id")
-@org.hibernate.annotations.NamedQuery(name = "findAllP", query = "from Product")
+@ToString
+@Table(schema = "public")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "title")
     private String title;
 
     @Column(name = "cost")
-    private String cost;
+    private BigDecimal cost;
 
     @Version
     @Column(name = "optlock",
@@ -32,6 +33,7 @@ public class Product {
             nullable = false,
             length = 10)
     private Integer optlock;
+
 
     @Override
     public boolean equals(Object o) {
