@@ -1,0 +1,88 @@
+<!doctype html>
+
+<html xmlns:ng="http://angularjs.org" ng-app="app" lang="RU">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script src="index.js"></script>
+    <title>Store</title>
+</head>
+
+<body>
+<div class="container" ng-controller="indexController">
+    <h1>Наши продукты</h1>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Имя</td>
+            <td>Цена</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="p in products">
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.cost}}</td>
+            <td>
+                <button class="btn-danger" ng-click="removeProduct(p.id)">Удалить</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="flex-wrap: wrap">
+        <button ng-click="decrement()"> ВЛЕВО</button>
+        <label class="page-number">1</label>
+        <button ng-click="increment()"> ВПРАВО</button>
+    </div>
+
+    <h3>Сортировка</h3>
+    <form novalidate ng-submit="getFiltered()">
+        <div class="form-group col-md-6">
+            <label>Минимальная цена</label>
+            <input class="form-control" type="text" ng-model="NewFilter.min">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Максимальная цена</label>
+            <input class="form-control" type="text" ng-model="NewFilter.max">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Сортировать по</label>
+            <p><label>
+                <input  type="radio" value="GTM" ng-model="NewFilter.c">
+            </label> Больше минимума</p>
+            <p><label>
+                <input  type="radio" value="LTM" ng-model="NewFilter.c">
+            </label> Меньше максимума</p>
+            <p><label>
+                <input type="radio" value="BOUND" checked ng-model="NewFilter.c">
+            </label> В диапазоне</p>
+        </div>
+        <div>
+            <button type="submit">Отфильтровать</button>
+        </div>
+    </form>
+
+
+    <h3>Сохранить товар</h3>
+    <form novalidate ng-submit="saveProduct()">
+        <div class="form-group col-md-6">
+            <label>Title</label>
+            <input class="form-control" type="text" ng-model="NewProduct.title">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Cost</label>
+            <input class="form-control" type="number" ng-model="NewProduct.cost">
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

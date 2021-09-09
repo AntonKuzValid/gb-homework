@@ -27,7 +27,7 @@ public class FilterDeserializer extends JsonDeserializer<Filter> {
             try {
                 f.setMax(node.get("max").asInt());
                 f.setMin(node.get("min").asInt());
-                f.setC(Command.valueOf(node.get("c").asText().toUpperCase(Locale.ROOT)));
+                f.setC(Command.valueOf(node.get("c").asText()));
                 return f;
             } catch (NullPointerException e) {
                 log.info(e.getMessage());
