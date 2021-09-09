@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.6.0-1/css/bootstrap.min.css}"/>
+</head>
+<body>
+<script th:src="@{/webjars/bootstrap/4.6.0-1/js/bootstrap.bundle.min.js}"></script>
+
+<form action="#" th:action="@{/product}" method="post" th:object="${product}">
+    <div class="mb-3">
+        <label class="form-label">ID</label>
+        <input type="text" class="form-control" id="id" name="id"/>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title"/>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Price</label>
+        <input type="text" class="form-control" id="price" name="price"/>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn-primary">Add</button>
+    </div>
+</form>
+
+<div>
+    <h1>List of goods</h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="product : ${product}">
+            <td th:text="${product.id}">...</td>
+            <td th:text="${product.title}">...</td>
+            <td th:text="${product.price}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
