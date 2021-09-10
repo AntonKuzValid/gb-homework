@@ -9,6 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <script src="index.js"></script>
+    <script src="modal.js"></script>
     <title>Store</title>
 </head>
 
@@ -28,6 +29,7 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.cost}}</td>
+            <td>{{p.group.title}}</td>
             <td>
                 <button class="btn-danger" ng-click="removeProduct(p.id)">Удалить</button>
             </td>

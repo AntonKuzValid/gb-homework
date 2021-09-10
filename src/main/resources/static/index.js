@@ -1,6 +1,6 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
 
-    const contextPath = 'http://localhost:8181';
+    const contextPath = 'http://localhost:8181/api/v1';
     const pageNumber = document.querySelector(".page-number");
     let page = Number(pageNumber.textContent);
     console.log(pageNumber);

@@ -1,6 +1,8 @@
 package ru.geekbrains.data.entity;
 
 
+import com.fasterxml.jackson.annotation.*;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -14,6 +16,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Table(schema = "public")
+@ApiModel
 public class Product {
 
     @Id
@@ -33,6 +36,12 @@ public class Product {
             nullable = false,
             length = 10)
     private Integer optlock;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group")
+    @JsonProperty("group")
+    @ToString.Exclude
+    private CostGroup group;
 
 
     @Override

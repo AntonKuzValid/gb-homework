@@ -10,6 +10,14 @@ CREATE TABLE product
     optlock integer
 );
 
+CREATE TABLE cost_group
+(
+    id      bigserial PRIMARY KEY,
+    costGroup integer
+);
+
+
+
 do language plpgsql
 $$
     declare
